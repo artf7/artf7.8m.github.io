@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>С 8 Марта</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #c8475a;
+    --blush: #f2c4ce;
+    --cream: #fdf6f0;
+    --gold: #c9a96e;
+    --deep: #2a1a1f;
+    --petal1: #e8a0b0;
+    --petal2: #f5d0d8;
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  /* ── PETALS ── */
+  .petals {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    top: -60px;
+    border-radius: 80% 0 80% 0;
+    opacity: 0;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(0) rotate(0deg); opacity: .7; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ── LAYOUT ── */
+  .card {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 24px 48px;
+    overflow: hidden;
+  }
+
+  /* ── TOP DECORATION ── */
+  .floral-top {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    padding-top: 28px;
+    margin-bottom: 4px;
+  }
+  .floral-svg { width: 260px; opacity: .85; }
+
+  /* ── DATE BADGE ── */
+  .date-badge {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--rose);
+    background: white;
+    border: 1px solid var(--blush);
+    border-radius: 30px;
+    padding: 6px 18px;
+    margin-bottom: 20px;
+  }
+
+  /* ── HEADLINE ── */
+  .headline {
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .headline-small {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: .2em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .headline-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 12vw, 68px);
+    font-weight: 700;
+    color: var(--deep);
+    line-height: .95;
+    letter-spacing: -.01em;
+  }
+  .headline-main em {
+    font-style: italic;
+    color: var(--rose);
+  }
+  .headline-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 5vw, 26px);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--rose);
+    letter-spacing: .05em;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 80px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px auto;
+  }
+
+  /* ── EDITABLE SECTIONS ── */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .field-wrap {
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  /* recipient */
+  .field-recipient input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--blush);
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--deep);
+    text-align: center;
+    padding: 6px 4px 10px;
+    outline: none;
+    transition: border-color .3s;
+  }
+  .field-recipient input:focus { border-bottom-color: var(--rose); }
+  .field-recipient input::placeholder { color: #c8b0b8; }
+
+  /* main text */
+  .field-text textarea {
+    width: 100%;
+    background: white;
+    border: 1.5px solid var(--blush);
+    border-radius: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--deep);
+    padding: 16px 18px;
+    outline: none;
+    resize: none;
+    min-height: 130px;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  .field-text textarea:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgba(200,71,90,.08);
+  }
+  .field-text textarea::placeholder { color: #c8b0b8; font-style: italic; }
+
+  /* sender */
+  .field-sender input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--blush);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: .08em;
+    color: var(--deep);
+    text-align: center;
+    padding: 6px 4px 10px;
+    outline: none;
+    transition: border-color .3s;
+  }
+  .field-sender input:focus { border-bottom-color: var(--rose); }
+  .field-sender input::placeholder { color: #c8b0b8; }
+
+  /* ── STATIC TEXT BLOCKS ── */
+  .greeting-to {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--rose);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .greeting-body {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--deep);
+    text-align: center;
+    white-space: pre-wrap;
+    background: white;
+    border: 1.5px solid var(--blush);
+    border-radius: 12px;
+    padding: 16px 18px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .greeting-from {
+    font-size: 14px;
+    letter-spacing: .12em;
+    color: #999;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── BOTTOM ORNAMENT ── */
+  .bottom-ornament {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 22px;
+    letter-spacing: .2em;
+    opacity: .4;
+  }
+
+  /* ── SHIMMER on headline ── */
+  @keyframes shimmer {
+    0%,100% { text-shadow: 0 0 0px transparent; }
+    50%      { text-shadow: 0 2px 18px rgba(200,71,90,.25); }
+  }
+  .headline-main { animation: shimmer 4s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- Falling petals -->
+<div class="petals" id="petals"></div>
+
+<div class="card">
+
+
+    <img class="floral-top" src="/img/image.png"/>
+
+
+  <!-- Date badge -->
+  <div class="date-badge">8 марта · Международный женский день</div>
+
+  <!-- Headline -->
+  <div class="headline">
+    <span class="headline-small">Поздравляю с</span>
+    <div class="headline-main"> <em>С восьмым</em></div>
+    <span class="headline-sub">Марта!</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ✏️ РЕДАКТИРУЙ ТЕКСТ ПРЯМО ЗДЕСЬ -->
+
+  <!-- Кому: замени текст внутри тега -->
+  <div class="greeting-to">Дорогая Дашуля,</div>
+
+  <div class="divider"></div>
+
+  <!-- Поздравление: замени текст внутри тега -->
+  <div class="greeting-body"> „Я люблю тебя, я люблю тебя, моё сердце — это роза, расцветшая благодаря твоей любви, моя жизнь — пустыня, овеянная ласковым ветерком твоего дыхания и орошённая прохладными родниками твоих глаз; следы твоих маленьких ног стали для меня тенистыми оазисами, запах твоих волос подобен аромату мирры, и, куда бы ты ни шёл, от тебя исходит благоухание коричного дерева. Люби меня всегда, люби меня всегда. Ты высшая, совершенная любовь моей жизни, и другой не может быть."
+</div>
+
+  <div class="divider"></div>
+
+  <!-- От кого: замени текст внутри тега -->
+  <div class="greeting-from">С любовью, твой Тема</div>
+
+  <div class="bottom-ornament">🌹 🌸 🌷</div>
+</div>
+
+<script>
+// ── Generate petals ──
+const petalsEl = document.getElementById('petals');
+const colors = ['#f2c4ce','#f5d0d8','#e8a0b0','#fde8ee','#c8475a','#f9dde5'];
+const sizes  = [10,14,18,12,16];
+
+for (let i = 0; i < 22; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  const size = sizes[i % sizes.length];
+  const left = Math.random() * 100;
+  const dur  = 6 + Math.random() * 8;
+  const del  = Math.random() * 10;
+  p.style.cssText = `
+    left:${left}%;
+    width:${size}px; height:${size * 1.3}px;
+    background:${colors[i % colors.length]};
+    animation-duration:${dur}s;
+    animation-delay:${del}s;
+    border-radius:${Math.random()>0.5?'80% 0 80% 0':'50% 80% 50% 80%'};
+    opacity:0;
+  `;
+  petalsEl.appendChild(p);
+}
+</script>
+</body>
+</html>
